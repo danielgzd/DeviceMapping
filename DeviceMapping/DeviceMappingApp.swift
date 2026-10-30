@@ -25,7 +25,7 @@ struct ContentView: View {
                 Section("配置状态") {
                     Text(refreshMessage)
                     LabeledContent("配置版本", value: store.configuration.map { String($0.version) } ?? "不可用")
-                    LabeledContent("配置来源", value: store.source == .bundled ? "随应用内置" : store.source == .cached ? "本地缓存" : "读取失败")
+                    LabeledContent("配置来源", value: store.source == .bundled ? "App 内置配置" : store.source == .cached ? "远端／业务配置（已缓存）" : "读取失败")
                     LabeledContent("映射数量", value: String(store.configuration?.devices.count ?? 0))
                 }
                 Section("查询设备") {
@@ -38,7 +38,7 @@ struct ContentView: View {
             .navigationTitle("设备映射")
             .task {
                 let success = await DeviceInfo.refreshConfiguration()
-                refreshMessage = success ? "远端配置已验证" : "远端不可用，使用已有缓存与内置配置"
+                refreshMessage = success ? "远端刷新成功（同版本沿用已有缓存）" : "远端刷新未成功，使用已有缓存或内置配置"
             }
         }
     }
