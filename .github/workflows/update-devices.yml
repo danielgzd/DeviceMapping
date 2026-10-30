@@ -1,0 +1,37 @@
+name: 每日同步设备映射
+on:
+  schedule:
+    # UTC 01:23，即北京时间每天 09:23；GitHub 定时执行可能延迟。
+    - cron: '23 1 * * *'
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/**'
+      - '.github/workflows/update-devices.yml'
+permissions:
+  contents: write
+concurrency:
+  group: device-mapping-sync
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: 验证同步逻辑
+        run: python -m unittest discover -s scripts -p 'test_*.py'
+      - name: 获取并生成配置
+        run: python scripts/update_devices.py
+      - name: 提交有变化的配置
+        run: |
+          if ! git diff --quiet -- config/device-mapping.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add config/device-mapping.json
+            git commit -m "更新设备映射配置"
+            git push
+          fi
