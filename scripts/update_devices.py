@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # Copyright © 2026 gdd. Licensed under the MIT License.
-"""同步 IPSW.me。保留历史设备；数据变化才递增版本，失败不覆盖文件。"""
+"""同步 IPSW.me。保留历史设备；每次成功构建递增版本，失败不覆盖文件。"""
+from datetime import datetime
+from zoneinfo import ZoneInfo
 import argparse
 import json
 from pathlib import Path
@@ -33,15 +35,14 @@ def validate(rows):
         result[row['identifier']] = row
     return result
 
-def generate(incoming, previous):
+def generate(incoming, previous, build_time=None):
     devices = validate(previous['devices']) if previous else {}
     devices.update(validate(incoming))
     rows = sorted(devices.values(), key=lambda row: row['identifier'])
-    old_rows = sorted(previous['devices'], key=lambda row: row['identifier']) if previous else []
     version = previous['version'] if previous else 0
     if isinstance(version, bool) or not isinstance(version, int) or version < 0:
         raise ValueError('历史版本无效')
-    return {'version': version + (rows != old_rows), 'devices': rows}
+    return {'version': version + 1, 'buildTime': build_time or datetime.now(ZoneInfo('Asia/Shanghai')).isoformat(timespec='seconds'), 'devices': rows}
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
@@ -54,7 +55,8 @@ def main():
     if len(raw) > 2 * 1024 * 1024:
         raise ValueError('上游数据超过限制')
     previous = json.loads(args.output.read_text()) if args.output.exists() else None
-    result = generate(json.loads(raw), previous)
+    build_time = datetime.now(ZoneInfo("Asia/Shanghai")).isoformat(timespec="seconds")
+    result = generate(json.loads(raw), previous, build_time)
     outputs = {args.output: result}
     # 分类依据硬件标识，不依赖可能重名或变化的设备名称。
     for name in [*CATEGORIES, 'simulator', 'other', 'ios']:
@@ -68,7 +70,7 @@ def main():
             continue
         old = json.loads(path.read_text()) if path.exists() else None
         # 各分类独立递增；首次沿用全量版本，避免由全量地址切换时发生版本回退。
-        outputs[path] = {'version': old['version'] + (rows != old['devices']), 'devices': rows} if old else {'version': result['version'], 'devices': rows}
+        outputs[path] = {'version': old['version'] + 1, 'buildTime': build_time, 'devices': rows} if old else {'version': result['version'], 'buildTime': build_time, 'devices': rows}
         validate(rows)
     # 全部校验后再落盘，避免校验失败时发布部分文件。
     encoded_outputs = {}

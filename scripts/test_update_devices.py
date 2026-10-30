@@ -7,7 +7,8 @@ class SyncTests(unittest.TestCase):
         new = generate([{'identifier': 'phone', 'name': 'iPhone'}], old)
         self.assertEqual(new['version'], 3)
         self.assertEqual(len(new['devices']), 2)
-        self.assertEqual(generate(new['devices'], new), new)
+        self.assertEqual(generate(new['devices'], new)['version'], 4)
+        self.assertIn('buildTime', new)
     def test_duplicate_rejected(self):
         with self.assertRaises(ValueError):
             generate([{'identifier': 'x', 'name': 'X'}] * 2, None)
