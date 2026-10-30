@@ -2,17 +2,17 @@
 
 **iOS 设备名称查询工具，支持远端更新与本地配置兜底。**
 
-[![每日同步](https://github.com/danielgzd/DeviceMapping/actions/workflows/update-devices.yml/badge.svg)](https://github.com/danielgzd/DeviceMapping/actions/workflows/update-devices.yml)
+[![每半月同步](https://github.com/danielgzd/DeviceMapping/actions/workflows/update-devices.yml/badge.svg)](https://github.com/danielgzd/DeviceMapping/actions/workflows/update-devices.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![iOS 15+](https://img.shields.io/badge/iOS-15%2B-black.svg)](#快速接入)
 
-将 `iPhone19,4` 等硬件标识转换为设备名称。通过 IPSW.me 每日同步机型数据，支持离线查询，也支持业务自行下发配置。
+将 `iPhone19,4` 等硬件标识转换为设备名称。通过 IPSW.me 每半月同步机型数据，支持离线查询，也支持业务自行下发配置。
 
 | 能力 | 说明 |
 | --- | --- |
 | 系统支持 | 工具支持 iOS 15+；演示 App 支持 iOS 16+ |
 | 接入方式 | 复制一个文件夹，无第三方依赖 |
-| 数据更新 | GitHub Actions 每日生成远端 JSON |
+| 数据更新 | GitHub Actions 每半月生成远端 JSON |
 | 离线可用 | 远端缓存与随包配置共同提供查询数据 |
 | 异常处理 | 配置无效不影响查询，未收录机型返回原始标识 |
 
@@ -138,7 +138,7 @@ if let url = DeviceInfo.configurationCacheURL {
 
 **远端 JSON：** [查看或获取配置](https://raw.githubusercontent.com/danielgzd/DeviceMapping/main/config/ios.json)
 
-**执行记录：** [每日同步设备映射](https://github.com/danielgzd/DeviceMapping/actions/workflows/update-devices.yml)
+**执行记录：** [每半月同步设备映射](https://github.com/danielgzd/DeviceMapping/actions/workflows/update-devices.yml)
 
 | 文件 | 用途 |
 | --- | --- |
@@ -147,7 +147,7 @@ if let url = DeviceInfo.configurationCacheURL {
 | [`scripts/update_devices.py`](scripts/update_devices.py) | 获取、校验、合并并生成配置 |
 | [每日工作流](.github/workflows/update-devices.yml) | 定时运行与自动提交 |
 
-任务每天 **北京时间 09:23** 执行，也支持在 Actions 页面手动运行：
+任务在 **每月 1 日和 16 日，北京时间 09:23** 执行，也支持在 Actions 页面手动运行：
 
 1. 运行同步脚本测试。
 2. 获取 IPSW.me 设备列表并校验。
@@ -235,3 +235,16 @@ config/
 ```
 
 每个设备归入一个基础类别，`ios.json` 是移动设备的合并视图，`device-mapping.json` 是全部类别的合并视图。未来无法识别类别的标识会进入 `other.json`；没有记录的类别不生成空文件。分类文件从全量数据重新筛选，防止分类规则调整后残留旧记录。App 内置全量 JSON 保持不变。
+
+## Telegram 通知
+
+在仓库 Settings → Secrets and variables → Actions 添加两个 Repository Secrets：
+
+| Secret | 内容 |
+| --- | --- |
+| `TELEGRAM_BOT_TOKEN` | BotFather 创建的机器人的 Token |
+| `TELEGRAM_CHAT_ID` | 接收消息的个人或群组 Chat ID |
+
+个人接收需先向机器人发送 `/start`；群组接收需将机器人加入群组并允许发送消息。Token 不要写入代码或聊天。未配置 Secrets 时跳过通知；仅在配置有更新或同步失败时发送，内容包含运行记录链接，无变化保持安静。可从 Actions 手动执行同步验证；无变化时不会发送测试消息。
+
+这里的“每半月”为每月 1 日、16 日，并非严格每隔 15×24 小时。

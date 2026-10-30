@@ -1,8 +1,8 @@
-name: 每日同步设备映射
+name: 每半月同步设备映射
 on:
   schedule:
-    # UTC 01:23，即北京时间每天 09:23；GitHub 定时执行可能延迟。
-    - cron: '23 1 * * *'
+    # UTC 01:23，即北京时间每月 1 日和 16 日 09:23；GitHub 定时执行可能延迟。
+    - cron: '23 1 1,16 * *'
   workflow_dispatch:
   push:
     paths:
@@ -27,6 +27,7 @@ jobs:
       - name: 获取并生成配置
         run: python scripts/update_devices.py
       - name: 提交有变化的配置
+        id: commit
         run: |
           if ! git diff --quiet -- config/; then
             git config user.name "github-actions[bot]"
@@ -34,4 +35,13 @@ jobs:
             git add config/
             git commit -m "更新设备映射配置"
             git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
+      - name: 推送 Telegram 通知
+        if: always()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SYNC_STATUS: ${{ job.status }}
+          CONFIG_CHANGED: ${{ steps.commit.outputs.changed }}
+        run: python3 scripts/notify_telegram.py
