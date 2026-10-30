@@ -6,13 +6,17 @@ import Darwin
 
 /// 设备机型工具。同步查询只读本地；可显式调用异步方法刷新远端配置。
 ///
-/// 配置来自 Bundle 与 UserDefaults，按机型优先查询业务缓存，缺失时查询内置配置。
+/// 配置来自 Bundle 与 Application Support 缓存文件，按机型优先查询业务缓存，缺失时查询内置配置。
 /// 名称允许重复，identifier 必须唯一。名称用于展示，不能用作设备唯一标识。
 public final class DeviceInfo {
     private init() {}
 
-    /// 业务保存完整配置的 UserDefaults 键，支持 Data、JSON 字符串或字典。
-    public static let configurationKey = "DeviceMapping.configuration"
+    /// 默认持久缓存位置。目录不可用时返回 nil，查询仍可使用随包配置。
+    public static var configurationCacheURL: URL? {
+        FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first?
+            .appendingPathComponent("DeviceMapping", isDirectory: true)
+            .appendingPathComponent("device-mapping.json")
+    }
 
     /// 仓库每日生成的远端配置。查询名称不会自动发起请求。
     public static let remoteConfigurationURL = URL(string:
@@ -25,7 +29,7 @@ public final class DeviceInfo {
     @discardableResult
     public static func refreshConfiguration(
         from url: URL? = remoteConfigurationURL,
-        userDefaults: UserDefaults = .standard
+        cacheURL: URL? = configurationCacheURL
     ) async -> Bool {
         guard let url, url.scheme == "https" else { return false }
         var request = URLRequest(url: url)
@@ -42,9 +46,9 @@ public final class DeviceInfo {
                 guard data.count < 2 * 1024 * 1024 else { return false }
                 data.append(byte)
             }
-            let incoming = try DeviceMappingConfiguration.decode(data)
+            _ = try DeviceMappingConfiguration.decode(data)
             // 写入段串行执行，避免并发刷新中较旧的请求覆盖较新的版本。
-            return saveConfiguration(data, version: incoming.version, userDefaults: userDefaults)
+            return saveConfiguration(data, at: cacheURL)
         } catch {
             return false
         }
@@ -52,16 +56,26 @@ public final class DeviceInfo {
 
     private static let configurationLock = NSLock()
 
-    private static func saveConfiguration(_ data: Data, version: Int, userDefaults: UserDefaults) -> Bool {
+    /// 保存业务下发的完整或增量 JSON。仅接受有效配置，拒绝版本回退。
+    /// 原子写入失败返回 false，已有缓存保持不变；不使用 UserDefaults。
+    @discardableResult
+    public static func saveConfiguration(_ data: Data, at cacheURL: URL? = configurationCacheURL) -> Bool {
+        guard let cacheURL, cacheURL.isFileURL,
+              let incoming = try? DeviceMappingConfiguration.decode(data) else { return false }
         configurationLock.lock()
         defer { configurationLock.unlock() }
-        if let cached = DeviceMappingStore.cachedData(from: userDefaults),
+        if let cached = DeviceMappingStore.cachedData(at: cacheURL),
            let existing = try? DeviceMappingConfiguration.decode(cached) {
-            guard version >= existing.version else { return false }
-            if version == existing.version { return true }
+            guard incoming.version >= existing.version else { return false }
+            if incoming.version == existing.version { return true }
         }
-        userDefaults.set(data, forKey: configurationKey)
-        return true
+        do {
+            try FileManager.default.createDirectory(at: cacheURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+            try data.write(to: cacheURL, options: .atomic)
+            return true
+        } catch {
+            return false
+        }
     }
 
     /// 返回机型硬件标识，例如 iPhone19,4；同一机型的多台设备会返回相同值。
@@ -89,13 +103,13 @@ public final class DeviceInfo {
     /// - Parameters:
     ///   - identifier: 机型硬件标识；不对名称做反向唯一匹配。
     ///   - bundle: 内置 device-mapping.json 所在 Bundle，默认主应用。
-    ///   - userDefaults: 业务配置缓存，默认 standard，可注入 App Group 的 defaults。
+    ///   - cacheURL: 缓存文件路径，默认 Application Support，可注入 App Group 文件地址。
     public static func getDeviceName(
         for identifier: String,
         bundle: Bundle = .main,
-        userDefaults: UserDefaults = .standard
+        cacheURL: URL? = configurationCacheURL
     ) -> String {
-        DeviceMappingStore(bundle: bundle, userDefaults: userDefaults).name(for: identifier)
+        DeviceMappingStore(bundle: bundle, cacheURL: cacheURL).name(for: identifier)
     }
 
     /// 返回系统首选语言标识（例如 zh-Hans-CN），无可用值时返回 unknown。
@@ -137,7 +151,6 @@ struct DeviceMappingConfiguration: Codable, Equatable {
 }
 
 struct DeviceMappingStore {
-    static let userDefaultsKey = DeviceInfo.configurationKey
 
     enum Source: String { case bundled, cached, unavailable }
     let configuration: DeviceMappingConfiguration?
@@ -164,24 +177,22 @@ struct DeviceMappingStore {
         }
     }
 
-    /// 仅从应用资源及 UserDefaults 读取，不产生网络请求或写入缓存。
-    init(bundle: Bundle = .main, userDefaults: UserDefaults = .standard) {
+    /// 仅从应用资源及缓存文件 读取，不产生网络请求或写入缓存。
+    init(bundle: Bundle = .main, cacheURL: URL? = DeviceInfo.configurationCacheURL) {
         let bundledData = bundle.url(forResource: "device-mapping", withExtension: "json")
             .flatMap { try? Data(contentsOf: $0) }
-        let cachedData = Self.cachedData(from: userDefaults)
+        let cachedData = Self.cachedData(at: cacheURL)
         self.init(bundledData: bundledData, cachedData: cachedData)
     }
 
-    /// 业务可写入 JSON Data、JSON 字符串或可序列化的字典。
-    static func cachedData(from defaults: UserDefaults) -> Data? {
-        let object = defaults.object(forKey: userDefaultsKey)
-        if let data = object as? Data { return data }
-        if let string = object as? String { return string.data(using: .utf8) }
-        if let dictionary = object as? [String: Any],
-           JSONSerialization.isValidJSONObject(dictionary) {
-            return try? JSONSerialization.data(withJSONObject: dictionary)
-        }
-        return nil
+    /// 限量读取，文件异常或过大时忽略缓存。最多读取 2 MB + 1 字节。
+    static func cachedData(at url: URL?) -> Data? {
+        guard let url, url.isFileURL,
+              let handle = try? FileHandle(forReadingFrom: url) else { return nil }
+        defer { try? handle.close() }
+        guard let data = try? handle.read(upToCount: 2 * 1024 * 1024 + 1),
+              data.count <= 2 * 1024 * 1024 else { return nil }
+        return data
     }
 
     func name(for identifier: String) -> String {

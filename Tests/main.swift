@@ -21,26 +21,24 @@ let store = DeviceMappingStore(bundledData: bundled)
 assert(store.source == .bundled)
 assert(store.name(for: "iPad19,1") == "iPad mini (A20 Pro)")
 assert(store.name(for: "iPhone19,4") == "iPhone Duo")
-let suite = "DeviceMappingTests.\(UUID().uuidString)"
-let defaults = UserDefaults(suiteName: suite)!
-defer { defaults.removePersistentDomain(forName: suite) }
+let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+let cacheURL = directory.appendingPathComponent("device-mapping.json")
+defer { try? FileManager.default.removeItem(at: directory) }
 func cachedStore() -> DeviceMappingStore {
-    DeviceMappingStore(bundledData: bundled, cachedData: DeviceMappingStore.cachedData(from: defaults))
+    DeviceMappingStore(bundledData: bundled, cachedData: DeviceMappingStore.cachedData(at: cacheURL))
 }
 assert(cachedStore().source == .bundled)
-defaults.set(data(3), forKey: DeviceMappingStore.userDefaultsKey)
+assert(DeviceInfo.saveConfiguration(data(3), at: cacheURL))
 assert(cachedStore().configuration?.version == 3)
-defaults.set(String(data: data(3), encoding: .utf8)!, forKey: DeviceMappingStore.userDefaultsKey)
+assert(!DeviceInfo.saveConfiguration(data(2), at: cacheURL))
 assert(cachedStore().configuration?.version == 3)
-defaults.set(["version": 4, "devices": [["identifier": "test,1", "name": "字典设备"]]], forKey: DeviceMappingStore.userDefaultsKey)
-assert(cachedStore().name(for: "test,1") == "字典设备")
-defaults.set(broken, forKey: DeviceMappingStore.userDefaultsKey)
+assert(!DeviceInfo.saveConfiguration(broken, at: cacheURL))
+assert(cachedStore().configuration?.version == 3)
+assert(!DeviceInfo.saveConfiguration(data(4), at: URL(fileURLWithPath: "/dev/null/config.json")))
+assert(!DeviceInfo.saveConfiguration(data(4), at: nil))
+try broken.write(to: cacheURL)
 assert(cachedStore().source == .bundled)
-defaults.set(data(2), forKey: DeviceMappingStore.userDefaultsKey)
-assert(cachedStore().source == .cached)
-defaults.set(123, forKey: DeviceMappingStore.userDefaultsKey)
-assert(cachedStore().source == .bundled)
-defaults.removeObject(forKey: DeviceMappingStore.userDefaultsKey)
+try FileManager.default.removeItem(at: cacheURL)
 assert(cachedStore().source == .bundled)
 let raw = Data("[{\"identifier\":\"test,1\",\"name\":\"设备\"}]".utf8)
 assert(DeviceMappingStore(bundledData: raw).source == .unavailable)
@@ -53,15 +51,15 @@ let repeatedData = try! JSONEncoder().encode(repeatedNames)
 let repeatedStore = DeviceMappingStore(bundledData: repeatedData)
 assert(repeatedStore.name(for: "a,1") == "同名设备")
 assert(repeatedStore.name(for: "a,2") == "同名设备")
-defaults.set(repeatedData, forKey: DeviceInfo.configurationKey)
-assert(DeviceInfo.getDeviceName(for: "a,2", userDefaults: defaults) == "同名设备")
+assert(DeviceInfo.saveConfiguration(repeatedData, at: cacheURL))
+assert(DeviceInfo.getDeviceName(for: "a,2", cacheURL: cacheURL) == "同名设备")
 let malformed = ["null", "[]", "{}", "{\"version\":true,\"devices\":[]}", "{\"version\":999999999999999999999999999,\"devices\":[]}"]
 for text in malformed {
     assert(DeviceMappingStore(bundledData: bundled, cachedData: Data(text.utf8)).source == .bundled)
 }
 assert(DeviceMappingStore(bundledData: bundled, cachedData: Data(repeating: 32, count: 2 * 1024 * 1024 + 1)).source == .bundled)
 DispatchQueue.concurrentPerform(iterations: 200) { _ in
-    assert(DeviceInfo.getDeviceName(for: "a,2", userDefaults: defaults) == "同名设备")
+    assert(DeviceInfo.getDeviceName(for: "a,2", cacheURL: cacheURL) == "同名设备")
 }
 print("异常配置、超限数据及 200 次并发查询检查通过")
 
@@ -75,3 +73,8 @@ assert(partial.name(for: "unknown") == "unknown")
 let override = DeviceMappingStore(bundledData: data(10, "内置名称"), cachedData: data(1, "业务名称"))
 assert(override.name(for: "test,1") == "业务名称")
 print("增量配置、本地补查、业务优先及未知标识检查通过")
+
+try Data(repeating: 32, count: 2 * 1024 * 1024 + 1).write(to: cacheURL)
+assert(DeviceMappingStore.cachedData(at: cacheURL) == nil)
+assert(cachedStore().source == .bundled)
+print("文件持久化、版本防回退、写入失败、文件损坏和限量读取检查通过")

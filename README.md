@@ -61,7 +61,7 @@ Task {
 }
 ```
 
-有效配置会缓存到 UserDefaults，后续启动可离线使用。需要更新界面时，请在 `MainActor` 上执行界面操作。
+有效配置会原子写入 Application Support 缓存文件，后续启动可离线使用。需要更新界面时，请在 `MainActor` 上执行界面操作。
 
 > 刷新失败会保留已有缓存；业务尚未缓存任何配置时，直接使用内置 JSON。
 
@@ -114,19 +114,25 @@ HTTP 失败、超时、无效 JSON 或超过 2 MB 的响应都会使刷新返回
 
 ### 业务自行下发
 
-业务也可以把带版本号的 JSON 直接存入约定键，支持 `Data`、JSON 字符串或可序列化字典：
+业务也可以直接保存带版本号的 JSON Data：
 
 ```swift
-UserDefaults.standard.set(jsonData, forKey: DeviceInfo.configurationKey)
+let saved = DeviceInfo.saveConfiguration(jsonData)
 
 // 下一次查询即可读取，无需重启
 let name = DeviceInfo.getDeviceName()
 
 // 按需清除缓存，恢复使用内置配置
-UserDefaults.standard.removeObject(forKey: DeviceInfo.configurationKey)
+if let url = DeviceInfo.configurationCacheURL {
+    try? FileManager.default.removeItem(at: url)
+}
 ```
 
-App Group 可通过 `userDefaults:` 参数注入共享缓存。每次名称查询会重新读取本地配置，建议获取后复用结果，避免在动画等高频回调中重复调用。
+默认缓存位置为 `Library/Application Support/DeviceMapping/device-mapping.json`。支持通过 `cacheURL:` 注入 App Group 文件地址。保存前校验内容和版本，原子写入失败会返回 false；读取最多 2 MB + 1 字节，超限、损坏或缺失文件均忽略并查询内置配置。
+
+此版本不再读写 UserDefaults，也不会自动迁移旧键。升级后可重新刷新远端或通过 `saveConfiguration` 写入业务配置；原有偏好设置键不会被自动删除。
+
+每次名称查询会重新读取本地配置，建议获取后复用结果，避免在动画等高频回调中重复调用。
 
 ## 自动更新
 
