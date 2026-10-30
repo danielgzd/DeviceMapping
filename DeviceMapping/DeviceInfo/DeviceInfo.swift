@@ -20,7 +20,7 @@ public final class DeviceInfo {
 
     /// 仓库每日生成的远端配置。查询名称不会自动发起请求。
     public static let remoteConfigurationURL = URL(string:
-        "https://raw.githubusercontent.com/danielgzd/DeviceMapping/main/config/device-mapping.json"
+        "https://raw.githubusercontent.com/danielgzd/DeviceMapping/main/config/ios.json"
     )
 
     /// 异步刷新远端配置，建议 App 启动后调用，不阻塞页面展示。

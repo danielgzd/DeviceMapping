@@ -42,14 +42,33 @@ def main():
         raise ValueError('上游数据超过限制')
     previous = json.loads(args.output.read_text()) if args.output.exists() else None
     result = generate(json.loads(raw), previous)
-    encoded = json.dumps(result, ensure_ascii=False, indent=2) + '\n'
-    if len(encoded.encode()) > 2 * 1024 * 1024:
-        raise ValueError('生成数据超过客户端限制')
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    temporary = args.output.with_suffix('.tmp')
-    temporary.write_text(encoded)
-    temporary.replace(args.output)
-    print(f"配置版本 {result['version']}，设备数 {len(result['devices'])}")
+    outputs = {args.output: result}
+    # 分类依据硬件标识，不依赖可能重名或变化的设备名称。
+    for name, prefixes in {
+        'iphone': ('iPhone',),
+        'ipad': ('iPad',),
+        'ios': ('iPhone', 'iPad', 'iPod'),
+    }.items():
+        path = args.output.parent / f'{name}.json'
+        rows = [row for row in result['devices'] if row['identifier'].startswith(prefixes)]
+        old = json.loads(path.read_text()) if path.exists() else None
+        # 各分类独立递增；首次沿用全量版本，避免由全量地址切换时发生版本回退。
+        outputs[path] = generate(rows, old) if old else {'version': result['version'], 'devices': rows}
+        validate(rows)
+    # 全部校验后再落盘，避免校验失败时发布部分文件。
+    encoded_outputs = {}
+    for path, config in outputs.items():
+        encoded = json.dumps(config, ensure_ascii=False, indent=2) + '\n'
+        if len(encoded.encode()) > 2 * 1024 * 1024:
+            raise ValueError('生成数据超过客户端限制')
+        encoded_outputs[path] = encoded
+    for path, encoded in encoded_outputs.items():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        temporary = path.with_suffix('.tmp')
+        temporary.write_text(encoded)
+        temporary.replace(path)
+        config = outputs[path]
+        print(f"{path.name}: 版本 {config['version']}，设备数 {len(config['devices'])}")
 
 if __name__ == '__main__':
     main()

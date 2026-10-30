@@ -136,7 +136,7 @@ if let url = DeviceInfo.configurationCacheURL {
 
 ## 自动更新
 
-**远端 JSON：** [查看或获取配置](https://raw.githubusercontent.com/danielgzd/DeviceMapping/main/config/device-mapping.json)
+**远端 JSON：** [查看或获取配置](https://raw.githubusercontent.com/danielgzd/DeviceMapping/main/config/ios.json)
 
 **执行记录：** [每日同步设备映射](https://github.com/danielgzd/DeviceMapping/actions/workflows/update-devices.yml)
 
@@ -194,3 +194,24 @@ xcodebuild -project DeviceMapping.xcodeproj \
 Copyright © 2026 gdd. 项目代码采用 [MIT License](LICENSE)。
 
 主要数据源为 [IPSW.me](https://api.ipsw.me/v4/devices)。本地补充记录参考 [DeviceKit](https://github.com/devicekit/DeviceKit)、[AppleDB](https://appledb.dev/device-selection/iPad-mini.html) 等公开资料。项目许可证不替代第三方数据适用的条款。
+
+## 按设备类型获取配置
+
+每日脚本同时生成以下文件，工具默认刷新 `ios.json`：
+
+| 文件 | 设备范围 |
+| --- | --- |
+| [ios.json](config/ios.json) | iPhone、iPad、iPod touch |
+| [iphone.json](config/iphone.json) | 仅 iPhone |
+| [ipad.json](config/ipad.json) | 仅 iPad |
+| [device-mapping.json](config/device-mapping.json) | 全部设备 |
+
+分类按 identifier 前缀筛选，各文件仅在自身数据变化时递增版本。首次分类文件沿用全量版本；后续不同配置流的版本独立，切换文件地址时建议清除原缓存，避免版本比较阻止新配置保存。
+
+随包的 `DeviceMapping/DeviceInfo/device-mapping.json` 保留全量设备，定时任务不覆盖，偶尔手动更新即可：
+
+```sh
+cp config/device-mapping.json DeviceMapping/DeviceInfo/device-mapping.json
+```
+
+这样正常使用只需下载 iOS 分类；远端缺少机型时仍能查询本地全量保底配置。
