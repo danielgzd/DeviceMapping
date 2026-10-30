@@ -1,0 +1,981 @@
+{
+  "version": 2,
+  "devices": [
+    {
+      "name": "Developer Transition Kit",
+      "identifier": "ADP3,2",
+      "boards": [
+        {
+          "boardconfig": "J273aAP",
+          "platform": "t8027",
+          "cpid": 32807,
+          "bdid": 66
+        }
+      ],
+      "boardconfig": "J273aAP",
+      "platform": "t8027",
+      "cpid": 32807,
+      "bdid": 66
+    },
+    {
+      "name": "Mac Studio (M1 Max)",
+      "identifier": "Mac13,1",
+      "boards": [
+        {
+          "boardconfig": "J375cAP",
+          "platform": "t6001",
+          "cpid": 24577,
+          "bdid": 4
+        }
+      ],
+      "boardconfig": "J375cAP",
+      "platform": "t6001",
+      "cpid": 24577,
+      "bdid": 4
+    },
+    {
+      "name": "Mac Studio (M1 Ultra)",
+      "identifier": "Mac13,2",
+      "boards": [
+        {
+          "boardconfig": "J375dAP",
+          "platform": "t6002",
+          "cpid": 24578,
+          "bdid": 12
+        }
+      ],
+      "boardconfig": "J375dAP",
+      "platform": "t6002",
+      "cpid": 24578,
+      "bdid": 12
+    },
+    {
+      "name": "MacBook Pro (M2 Pro, 16-inch, 2023)",
+      "identifier": "Mac14,10",
+      "boards": [
+        {
+          "boardconfig": "J416sAP",
+          "platform": "t6020",
+          "cpid": 24608,
+          "bdid": 6
+        }
+      ],
+      "boardconfig": "J416sAP",
+      "platform": "t6020",
+      "cpid": 24608,
+      "bdid": 6
+    },
+    {
+      "name": "Mac mini (M2 Pro, 2023)",
+      "identifier": "Mac14,12",
+      "boards": [
+        {
+          "boardconfig": "J474sAP",
+          "platform": "t6020",
+          "cpid": 24608,
+          "bdid": 2
+        }
+      ],
+      "boardconfig": "J474sAP",
+      "platform": "t6020",
+      "cpid": 24608,
+      "bdid": 2
+    },
+    {
+      "name": "Mac Studio (M2 Max, 2023)",
+      "identifier": "Mac14,13",
+      "boards": [
+        {
+          "boardconfig": "J475cAP",
+          "platform": "t6021",
+          "cpid": 24609,
+          "bdid": 10
+        }
+      ],
+      "boardconfig": "J475cAP",
+      "platform": "t6021",
+      "cpid": 24609,
+      "bdid": 10
+    },
+    {
+      "name": "Mac Studio (M2 Ultra, 2023)",
+      "identifier": "Mac14,14",
+      "boards": [
+        {
+          "boardconfig": "J475dAP",
+          "platform": "t6022",
+          "cpid": 24610,
+          "bdid": 10
+        }
+      ],
+      "boardconfig": "J475dAP",
+      "platform": "t6022",
+      "cpid": 24610,
+      "bdid": 10
+    },
+    {
+      "name": "MacBook Air (15-inch, M2, 2023)",
+      "identifier": "Mac14,15",
+      "boards": [
+        {
+          "boardconfig": "J415AP",
+          "platform": "t8112",
+          "cpid": 33042,
+          "bdid": 46
+        }
+      ],
+      "boardconfig": "J415AP",
+      "platform": "t8112",
+      "cpid": 33042,
+      "bdid": 46
+    },
+    {
+      "name": "MacBook Air (M2, 2022)",
+      "identifier": "Mac14,2",
+      "boards": [
+        {
+          "boardconfig": "J413AP",
+          "platform": "t8112",
+          "cpid": 33042,
+          "bdid": 40
+        }
+      ],
+      "boardconfig": "J413AP",
+      "platform": "t8112",
+      "cpid": 33042,
+      "bdid": 40
+    },
+    {
+      "name": "Mac mini (M2, 2023)",
+      "identifier": "Mac14,3",
+      "boards": [
+        {
+          "boardconfig": "J473AP",
+          "platform": "t8112",
+          "cpid": 33042,
+          "bdid": 36
+        }
+      ],
+      "boardconfig": "J473AP",
+      "platform": "t8112",
+      "cpid": 33042,
+      "bdid": 36
+    },
+    {
+      "name": "MacBook Pro (M2 Max, 14-inch, 2023)",
+      "identifier": "Mac14,5",
+      "boards": [
+        {
+          "boardconfig": "J414cAP",
+          "platform": "t6021",
+          "cpid": 24609,
+          "bdid": 4
+        }
+      ],
+      "boardconfig": "J414cAP",
+      "platform": "t6021",
+      "cpid": 24609,
+      "bdid": 4
+    },
+    {
+      "name": "MacBook Pro (M2 Max, 16-inch, 2023)",
+      "identifier": "Mac14,6",
+      "boards": [
+        {
+          "boardconfig": "J416cAP",
+          "platform": "t6021",
+          "cpid": 24609,
+          "bdid": 6
+        }
+      ],
+      "boardconfig": "J416cAP",
+      "platform": "t6021",
+      "cpid": 24609,
+      "bdid": 6
+    },
+    {
+      "name": "MacBook Pro (13-inch, M2, 2022)",
+      "identifier": "Mac14,7",
+      "boards": [
+        {
+          "boardconfig": "J493AP",
+          "platform": "t8112",
+          "cpid": 33042,
+          "bdid": 42
+        }
+      ],
+      "boardconfig": "J493AP",
+      "platform": "t8112",
+      "cpid": 33042,
+      "bdid": 42
+    },
+    {
+      "name": "Mac Pro (2023)",
+      "identifier": "Mac14,8",
+      "boards": [
+        {
+          "boardconfig": "J180dAP",
+          "platform": "t6022",
+          "cpid": 24610,
+          "bdid": 8
+        }
+      ],
+      "boardconfig": "J180dAP",
+      "platform": "t6022",
+      "cpid": 24610,
+      "bdid": 8
+    },
+    {
+      "name": "MacBook Pro (M2 Pro, 14-inch, 2023)",
+      "identifier": "Mac14,9",
+      "boards": [
+        {
+          "boardconfig": "J414sAP",
+          "platform": "t6020",
+          "cpid": 24608,
+          "bdid": 4
+        }
+      ],
+      "boardconfig": "J414sAP",
+      "platform": "t6020",
+      "cpid": 24608,
+      "bdid": 4
+    },
+    {
+      "name": "MacBook Pro (M3 Max, 14-inch, Nov 2023)",
+      "identifier": "Mac15,10",
+      "boards": [
+        {
+          "boardconfig": "J514mAP",
+          "platform": "t6034",
+          "cpid": 24628,
+          "bdid": 68
+        }
+      ],
+      "boardconfig": "J514mAP",
+      "platform": "t6034",
+      "cpid": 24628,
+      "bdid": 68
+    },
+    {
+      "name": "MacBook Pro (M3 Max, 16-inch, Nov 2023)",
+      "identifier": "Mac15,11",
+      "boards": [
+        {
+          "boardconfig": "J516mAP",
+          "platform": "t6034",
+          "cpid": 24628,
+          "bdid": 70
+        }
+      ],
+      "boardconfig": "J516mAP",
+      "platform": "t6034",
+      "cpid": 24628,
+      "bdid": 70
+    },
+    {
+      "name": "MacBook Air (13-inch, M3, 2024)",
+      "identifier": "Mac15,12",
+      "boards": [
+        {
+          "boardconfig": "J613AP",
+          "platform": "t8122",
+          "cpid": 33058,
+          "bdid": 48
+        }
+      ],
+      "boardconfig": "J613AP",
+      "platform": "t8122",
+      "cpid": 33058,
+      "bdid": 48
+    },
+    {
+      "name": "MacBook Air (15-inch, M3, 2024)",
+      "identifier": "Mac15,13",
+      "boards": [
+        {
+          "boardconfig": "J615AP",
+          "platform": "t8122",
+          "cpid": 33058,
+          "bdid": 50
+        }
+      ],
+      "boardconfig": "J615AP",
+      "platform": "t8122",
+      "cpid": 33058,
+      "bdid": 50
+    },
+    {
+      "name": "Mac Studio (2025)",
+      "identifier": "Mac15,14",
+      "boards": [
+        {
+          "boardconfig": "J575dAP",
+          "platform": "t6032",
+          "cpid": 24626,
+          "bdid": 68
+        }
+      ],
+      "boardconfig": "J575dAP",
+      "platform": "t6032",
+      "cpid": 24626,
+      "bdid": 68
+    },
+    {
+      "name": "MacBook Pro (M3, 14-inch, Nov 2023)",
+      "identifier": "Mac15,3",
+      "boards": [
+        {
+          "boardconfig": "J504AP",
+          "platform": "t8122",
+          "cpid": 33058,
+          "bdid": 34
+        }
+      ],
+      "boardconfig": "J504AP",
+      "platform": "t8122",
+      "cpid": 33058,
+      "bdid": 34
+    },
+    {
+      "name": "iMac (Two Ports, 24-inch, 2023)",
+      "identifier": "Mac15,4",
+      "boards": [
+        {
+          "boardconfig": "J433AP",
+          "platform": "t8122",
+          "cpid": 33058,
+          "bdid": 40
+        }
+      ],
+      "boardconfig": "J433AP",
+      "platform": "t8122",
+      "cpid": 33058,
+      "bdid": 40
+    },
+    {
+      "name": "iMac (Four Ports, 24-inch, 2023)",
+      "identifier": "Mac15,5",
+      "boards": [
+        {
+          "boardconfig": "J434AP",
+          "platform": "t8122",
+          "cpid": 33058,
+          "bdid": 42
+        }
+      ],
+      "boardconfig": "J434AP",
+      "platform": "t8122",
+      "cpid": 33058,
+      "bdid": 42
+    },
+    {
+      "name": "MacBook Pro (M3 Pro, 14-inch, Nov 2023)",
+      "identifier": "Mac15,6",
+      "boards": [
+        {
+          "boardconfig": "J514sAP",
+          "platform": "t6030",
+          "cpid": 24624,
+          "bdid": 4
+        }
+      ],
+      "boardconfig": "J514sAP",
+      "platform": "t6030",
+      "cpid": 24624,
+      "bdid": 4
+    },
+    {
+      "name": "MacBook Pro (M3 Pro, 16-inch, Nov 2023)",
+      "identifier": "Mac15,7",
+      "boards": [
+        {
+          "boardconfig": "J516sAP",
+          "platform": "t6030",
+          "cpid": 24624,
+          "bdid": 6
+        }
+      ],
+      "boardconfig": "J516sAP",
+      "platform": "t6030",
+      "cpid": 24624,
+      "bdid": 6
+    },
+    {
+      "name": "MacBook Pro (M3 Max, 14-inch, Nov 2023)",
+      "identifier": "Mac15,8",
+      "boards": [
+        {
+          "boardconfig": "J514cAP",
+          "platform": "t6031",
+          "cpid": 24625,
+          "bdid": 68
+        }
+      ],
+      "boardconfig": "J514cAP",
+      "platform": "t6031",
+      "cpid": 24625,
+      "bdid": 68
+    },
+    {
+      "name": "MacBook Pro (M3 Max, 16-inch, Nov 2023)",
+      "identifier": "Mac15,9",
+      "boards": [
+        {
+          "boardconfig": "J516cAP",
+          "platform": "t6031",
+          "cpid": 24625,
+          "bdid": 70
+        }
+      ],
+      "boardconfig": "J516cAP",
+      "platform": "t6031",
+      "cpid": 24625,
+      "bdid": 70
+    },
+    {
+      "name": "MacBook Pro (M4, 14-inch, Nov 2024)",
+      "identifier": "Mac16,1",
+      "boards": [
+        {
+          "boardconfig": "J604AP",
+          "platform": "t8132",
+          "cpid": 33074,
+          "bdid": 34
+        }
+      ],
+      "boardconfig": "J604AP",
+      "platform": "t8132",
+      "cpid": 33074,
+      "bdid": 34
+    },
+    {
+      "name": "Mac mini (M4, 2024)",
+      "identifier": "Mac16,10",
+      "boards": [
+        {
+          "boardconfig": "J773gAP",
+          "platform": "t8132",
+          "cpid": 33074,
+          "bdid": 42
+        }
+      ],
+      "boardconfig": "J773gAP",
+      "platform": "t8132",
+      "cpid": 33074,
+      "bdid": 42
+    },
+    {
+      "name": "Mac mini (M4 Pro, 2024)",
+      "identifier": "Mac16,11",
+      "boards": [
+        {
+          "boardconfig": "J773sAP",
+          "platform": "t6040",
+          "cpid": 24640,
+          "bdid": 2
+        }
+      ],
+      "boardconfig": "J773sAP",
+      "platform": "t6040",
+      "cpid": 24640,
+      "bdid": 2
+    },
+    {
+      "name": "MacBook Air (13-inch, M4, 2025)",
+      "identifier": "Mac16,12",
+      "boards": [
+        {
+          "boardconfig": "J713AP",
+          "platform": "t8132",
+          "cpid": 33074,
+          "bdid": 44
+        }
+      ],
+      "boardconfig": "J713AP",
+      "platform": "t8132",
+      "cpid": 33074,
+      "bdid": 44
+    },
+    {
+      "name": "MacBook Air (15-inch, M4, 2025)",
+      "identifier": "Mac16,13",
+      "boards": [
+        {
+          "boardconfig": "J715AP",
+          "platform": "t8132",
+          "cpid": 33074,
+          "bdid": 46
+        }
+      ],
+      "boardconfig": "J715AP",
+      "platform": "t8132",
+      "cpid": 33074,
+      "bdid": 46
+    },
+    {
+      "name": "iMac (Two Ports, 24-inch, 2024)",
+      "identifier": "Mac16,2",
+      "boards": [
+        {
+          "boardconfig": "J623AP",
+          "platform": "t8132",
+          "cpid": 33074,
+          "bdid": 36
+        }
+      ],
+      "boardconfig": "J623AP",
+      "platform": "t8132",
+      "cpid": 33074,
+      "bdid": 36
+    },
+    {
+      "name": "iMac (Four Ports, 24-inch, 2024)",
+      "identifier": "Mac16,3",
+      "boards": [
+        {
+          "boardconfig": "J624AP",
+          "platform": "t8132",
+          "cpid": 33074,
+          "bdid": 38
+        }
+      ],
+      "boardconfig": "J624AP",
+      "platform": "t8132",
+      "cpid": 33074,
+      "bdid": 38
+    },
+    {
+      "name": "MacBook Pro (M4 Max, 16-inch, Nov 2024)",
+      "identifier": "Mac16,5",
+      "boards": [
+        {
+          "boardconfig": "J616cAP",
+          "platform": "t6041",
+          "cpid": 24641,
+          "bdid": 6
+        }
+      ],
+      "boardconfig": "J616cAP",
+      "platform": "t6041",
+      "cpid": 24641,
+      "bdid": 6
+    },
+    {
+      "name": "MacBook Pro (M4 Max, 14-inch, Nov 2024)",
+      "identifier": "Mac16,6",
+      "boards": [
+        {
+          "boardconfig": "J614cAP",
+          "platform": "t6041",
+          "cpid": 24641,
+          "bdid": 4
+        }
+      ],
+      "boardconfig": "J614cAP",
+      "platform": "t6041",
+      "cpid": 24641,
+      "bdid": 4
+    },
+    {
+      "name": "MacBook Pro (M4 Pro, 16-inch, Nov 2024)",
+      "identifier": "Mac16,7",
+      "boards": [
+        {
+          "boardconfig": "J616sAP",
+          "platform": "t6040",
+          "cpid": 24640,
+          "bdid": 6
+        }
+      ],
+      "boardconfig": "J616sAP",
+      "platform": "t6040",
+      "cpid": 24640,
+      "bdid": 6
+    },
+    {
+      "name": "MacBook Pro (M4 Pro, 14-inch, Nov 2024)",
+      "identifier": "Mac16,8",
+      "boards": [
+        {
+          "boardconfig": "J614sAP",
+          "platform": "t6040",
+          "cpid": 24640,
+          "bdid": 4
+        }
+      ],
+      "boardconfig": "J614sAP",
+      "platform": "t6040",
+      "cpid": 24640,
+      "bdid": 4
+    },
+    {
+      "name": "Mac Studio (2025)",
+      "identifier": "Mac16,9",
+      "boards": [
+        {
+          "boardconfig": "J575cAP",
+          "platform": "t6041",
+          "cpid": 24641,
+          "bdid": 2
+        }
+      ],
+      "boardconfig": "J575cAP",
+      "platform": "t6041",
+      "cpid": 24641,
+      "bdid": 2
+    },
+    {
+      "name": "Mac Studio (M5 Max)",
+      "identifier": "Mac17,14",
+      "boards": [
+        {
+          "boardconfig": "J775cAP",
+          "platform": "t6050",
+          "cpid": 24656,
+          "bdid": 16
+        }
+      ],
+      "boardconfig": "J775cAP",
+      "platform": "t6050",
+      "cpid": 24656,
+      "bdid": 16
+    },
+    {
+      "name": "Mac Studio (M5 Ultra)",
+      "identifier": "Mac17,15",
+      "boards": [
+        {
+          "boardconfig": "J775dAP",
+          "platform": "t6050",
+          "cpid": 24656,
+          "bdid": 18
+        }
+      ],
+      "boardconfig": "J775dAP",
+      "platform": "t6050",
+      "cpid": 24656,
+      "bdid": 18
+    },
+    {
+      "name": "Mac mini (M5 Pro)",
+      "identifier": "Mac17,16",
+      "boards": [
+        {
+          "boardconfig": "J873sAP",
+          "platform": "t6050",
+          "cpid": 24656,
+          "bdid": 2
+        }
+      ],
+      "boardconfig": "J873sAP",
+      "platform": "t6050",
+      "cpid": 24656,
+      "bdid": 2
+    },
+    {
+      "name": "MacBook Pro (14-inch, M5)",
+      "identifier": "Mac17,2",
+      "boards": [
+        {
+          "boardconfig": "J704AP",
+          "platform": "t8142",
+          "cpid": 33090,
+          "bdid": 34
+        }
+      ],
+      "boardconfig": "J704AP",
+      "platform": "t8142",
+      "cpid": 33090,
+      "bdid": 34
+    },
+    {
+      "name": "MacBook Air (13-inch, M5)",
+      "identifier": "Mac17,3",
+      "boards": [
+        {
+          "boardconfig": "J813AP",
+          "platform": "t8142",
+          "cpid": 33090,
+          "bdid": 36
+        }
+      ],
+      "boardconfig": "J813AP",
+      "platform": "t8142",
+      "cpid": 33090,
+      "bdid": 36
+    },
+    {
+      "name": "MacBook Air (15-inch, M5)",
+      "identifier": "Mac17,4",
+      "boards": [
+        {
+          "boardconfig": "J815AP",
+          "platform": "t8142",
+          "cpid": 33090,
+          "bdid": 38
+        }
+      ],
+      "boardconfig": "J815AP",
+      "platform": "t8142",
+      "cpid": 33090,
+      "bdid": 38
+    },
+    {
+      "name": "MacBook Neo",
+      "identifier": "Mac17,5",
+      "boards": [
+        {
+          "boardconfig": "J700AP",
+          "platform": "t8140",
+          "cpid": 33088,
+          "bdid": 100
+        }
+      ],
+      "boardconfig": "J700AP",
+      "platform": "t8140",
+      "cpid": 33088,
+      "bdid": 100
+    },
+    {
+      "name": "MacBook Pro (16-inch, M5 Max)",
+      "identifier": "Mac17,6",
+      "boards": [
+        {
+          "boardconfig": "J716cAP",
+          "platform": "t6050",
+          "cpid": 24656,
+          "bdid": 14
+        }
+      ],
+      "boardconfig": "J716cAP",
+      "platform": "t6050",
+      "cpid": 24656,
+      "bdid": 14
+    },
+    {
+      "name": "MacBook Pro (14-inch, M5 Max)",
+      "identifier": "Mac17,7",
+      "boards": [
+        {
+          "boardconfig": "J714cAP",
+          "platform": "t6050",
+          "cpid": 24656,
+          "bdid": 10
+        }
+      ],
+      "boardconfig": "J714cAP",
+      "platform": "t6050",
+      "cpid": 24656,
+      "bdid": 10
+    },
+    {
+      "name": "MacBook Pro (16-inch, M5 Pro)",
+      "identifier": "Mac17,8",
+      "boards": [
+        {
+          "boardconfig": "J716sAP",
+          "platform": "t6050",
+          "cpid": 24656,
+          "bdid": 12
+        }
+      ],
+      "boardconfig": "J716sAP",
+      "platform": "t6050",
+      "cpid": 24656,
+      "bdid": 12
+    },
+    {
+      "name": "MacBook Pro (14-inch, M5 Pro)",
+      "identifier": "Mac17,9",
+      "boards": [
+        {
+          "boardconfig": "J714sAP",
+          "platform": "t6050",
+          "cpid": 24656,
+          "bdid": 8
+        }
+      ],
+      "boardconfig": "J714sAP",
+      "platform": "t6050",
+      "cpid": 24656,
+      "bdid": 8
+    },
+    {
+      "name": "Mac mini (M6)",
+      "identifier": "Mac18,5",
+      "boards": [
+        {
+          "boardconfig": "J873gAP",
+          "platform": "t8152",
+          "cpid": 33106,
+          "bdid": 36
+        }
+      ],
+      "boardconfig": "J873gAP",
+      "platform": "t8152",
+      "cpid": 33106,
+      "bdid": 36
+    },
+    {
+      "name": "MacBook Air (M1, Late 2020)",
+      "identifier": "MacBookAir10,1",
+      "boards": [
+        {
+          "boardconfig": "J313AP",
+          "platform": "t8103",
+          "cpid": 33027,
+          "bdid": 38
+        }
+      ],
+      "boardconfig": "J313AP",
+      "platform": "t8103",
+      "cpid": 33027,
+      "bdid": 38
+    },
+    {
+      "name": "MacBook Pro (M1, Late 2020)",
+      "identifier": "MacBookPro17,1",
+      "boards": [
+        {
+          "boardconfig": "J293AP",
+          "platform": "t8103",
+          "cpid": 33027,
+          "bdid": 36
+        }
+      ],
+      "boardconfig": "J293AP",
+      "platform": "t8103",
+      "cpid": 33027,
+      "bdid": 36
+    },
+    {
+      "name": "MacBook Pro (M1 Pro, 16-inch, 2021)",
+      "identifier": "MacBookPro18,1",
+      "boards": [
+        {
+          "boardconfig": "J316sAP",
+          "platform": "t6000",
+          "cpid": 24576,
+          "bdid": 10
+        }
+      ],
+      "boardconfig": "J316sAP",
+      "platform": "t6000",
+      "cpid": 24576,
+      "bdid": 10
+    },
+    {
+      "name": "MacBook Pro (M1 Max, 16-inch, 2021)",
+      "identifier": "MacBookPro18,2",
+      "boards": [
+        {
+          "boardconfig": "J316cAP",
+          "platform": "t6001",
+          "cpid": 24577,
+          "bdid": 10
+        }
+      ],
+      "boardconfig": "J316cAP",
+      "platform": "t6001",
+      "cpid": 24577,
+      "bdid": 10
+    },
+    {
+      "name": "MacBook Pro (M1 Pro, 14-inch, 2021)",
+      "identifier": "MacBookPro18,3",
+      "boards": [
+        {
+          "boardconfig": "J314sAP",
+          "platform": "t6000",
+          "cpid": 24576,
+          "bdid": 8
+        }
+      ],
+      "boardconfig": "J314sAP",
+      "platform": "t6000",
+      "cpid": 24576,
+      "bdid": 8
+    },
+    {
+      "name": "MacBook Pro (M1 Max, 14-inch, 2021)",
+      "identifier": "MacBookPro18,4",
+      "boards": [
+        {
+          "boardconfig": "J314cAP",
+          "platform": "t6001",
+          "cpid": 24577,
+          "bdid": 8
+        }
+      ],
+      "boardconfig": "J314cAP",
+      "platform": "t6001",
+      "cpid": 24577,
+      "bdid": 8
+    },
+    {
+      "name": "Mac mini (M1, Late 2020)",
+      "identifier": "Macmini9,1",
+      "boards": [
+        {
+          "boardconfig": "J274AP",
+          "platform": "t8103",
+          "cpid": 33027,
+          "bdid": 34
+        }
+      ],
+      "boardconfig": "J274AP",
+      "platform": "t8103",
+      "cpid": 33027,
+      "bdid": 34
+    },
+    {
+      "name": "Apple Virtual Machine 1",
+      "identifier": "VirtualMac2,1",
+      "boards": [
+        {
+          "boardconfig": "VMA2MACOSAP",
+          "platform": "vmapple2",
+          "cpid": 65024,
+          "bdid": 32
+        }
+      ],
+      "boardconfig": "VMA2MACOSAP",
+      "platform": "vmapple2",
+      "cpid": 65024,
+      "bdid": 32
+    },
+    {
+      "name": "iMac 24-inch (M1, Two Ports, 2021)",
+      "identifier": "iMac21,1",
+      "boards": [
+        {
+          "boardconfig": "J456AP",
+          "platform": "t8103",
+          "cpid": 33027,
+          "bdid": 40
+        }
+      ],
+      "boardconfig": "J456AP",
+      "platform": "t8103",
+      "cpid": 33027,
+      "bdid": 40
+    },
+    {
+      "name": "iMac 24-inch (M1, Four Ports, 2021)",
+      "identifier": "iMac21,2",
+      "boards": [
+        {
+          "boardconfig": "J457AP",
+          "platform": "t8103",
+          "cpid": 33027,
+          "bdid": 42
+        }
+      ],
+      "boardconfig": "J457AP",
+      "platform": "t8103",
+      "cpid": 33027,
+      "bdid": 42
+    }
+  ]
+}

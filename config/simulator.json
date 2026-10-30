@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "devices": [
+    {
+      "identifier": "arm64",
+      "name": "Simulator"
+    },
+    {
+      "identifier": "i386",
+      "name": "Simulator"
+    },
+    {
+      "identifier": "x86_64",
+      "name": "Simulator"
+    }
+  ]
+}

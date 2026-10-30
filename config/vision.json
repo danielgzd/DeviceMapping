@@ -1,0 +1,37 @@
+{
+  "version": 2,
+  "devices": [
+    {
+      "name": "Apple Vision Pro",
+      "identifier": "RealityDevice14,1",
+      "boards": [
+        {
+          "boardconfig": "N301AP",
+          "platform": "t8112",
+          "cpid": 33042,
+          "bdid": 66
+        }
+      ],
+      "boardconfig": "N301AP",
+      "platform": "t8112",
+      "cpid": 33042,
+      "bdid": 66
+    },
+    {
+      "name": "Apple Vision Pro (M5)",
+      "identifier": "RealityDevice17,1",
+      "boards": [
+        {
+          "boardconfig": "N301aAP",
+          "platform": "t8142",
+          "cpid": 33090,
+          "bdid": 66
+        }
+      ],
+      "boardconfig": "N301aAP",
+      "platform": "t8142",
+      "cpid": 33090,
+      "bdid": 66
+    }
+  ]
+}

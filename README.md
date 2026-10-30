@@ -215,3 +215,23 @@ cp config/device-mapping.json DeviceMapping/DeviceInfo/device-mapping.json
 ```
 
 这样正常使用只需下载 iOS 分类；远端缺少机型时仍能查询本地全量保底配置。
+
+### config 分类目录
+
+```text
+config/
+├── device-mapping.json   # 全量设备
+├── ios.json              # iPhone + iPad + iPod touch
+├── iphone.json           # iPhone
+├── ipad.json             # iPad
+├── ipod.json             # iPod touch
+├── mac.json              # Mac（包含 iMac、MacBook、VirtualMac、ADP）
+├── watch.json            # Apple Watch
+├── appletv.json          # Apple TV
+├── homepod.json          # HomePod（AudioAccessory）
+├── vision.json           # Apple Vision（RealityDevice）
+├── ibridge.json          # iBridge
+└── simulator.json        # 模拟器架构标识
+```
+
+每个设备归入一个基础类别，`ios.json` 是移动设备的合并视图，`device-mapping.json` 是全部类别的合并视图。未来无法识别类别的标识会进入 `other.json`；没有记录的类别不生成空文件。分类文件从全量数据重新筛选，防止分类规则调整后残留旧记录。App 内置全量 JSON 保持不变。

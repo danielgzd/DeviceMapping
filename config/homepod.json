@@ -1,0 +1,85 @@
+{
+  "version": 2,
+  "devices": [
+    {
+      "name": "HomePod",
+      "identifier": "AudioAccessory1,1",
+      "boards": [
+        {
+          "boardconfig": "B238aAP",
+          "platform": "",
+          "cpid": 28672,
+          "bdid": 56
+        }
+      ],
+      "boardconfig": "B238aAP",
+      "platform": "",
+      "cpid": 28672,
+      "bdid": 56
+    },
+    {
+      "name": "HomePod (Unknown Model)",
+      "identifier": "AudioAccessory1,2",
+      "boards": [
+        {
+          "boardconfig": "B238AP",
+          "platform": "",
+          "cpid": 28672,
+          "bdid": 26
+        }
+      ],
+      "boardconfig": "B238AP",
+      "platform": "",
+      "cpid": 28672,
+      "bdid": 26
+    },
+    {
+      "name": "HomePod mini 2",
+      "identifier": "AudioAccessory11,1",
+      "boards": [
+        {
+          "boardconfig": "B525AP",
+          "platform": "t8310",
+          "cpid": 33552,
+          "bdid": 66
+        }
+      ],
+      "boardconfig": "B525AP",
+      "platform": "t8310",
+      "cpid": 33552,
+      "bdid": 66
+    },
+    {
+      "name": "HomePod mini",
+      "identifier": "AudioAccessory5,1",
+      "boards": [
+        {
+          "boardconfig": "B520AP",
+          "platform": "t8006",
+          "cpid": 32774,
+          "bdid": 34
+        }
+      ],
+      "boardconfig": "B520AP",
+      "platform": "t8006",
+      "cpid": 32774,
+      "bdid": 34
+    },
+    {
+      "name": "HomePod (2nd generation)",
+      "identifier": "AudioAccessory6,1",
+      "boards": [
+        {
+          "boardconfig": "B620AP",
+          "platform": "",
+          "cpid": 33537,
+          "bdid": 24
+        }
+      ],
+      "boardconfig": "B620AP",
+      "platform": "",
+      "cpid": 33537,
+      "bdid": 24
+    }
+  ]
+}

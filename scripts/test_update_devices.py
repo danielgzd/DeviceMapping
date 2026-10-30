@@ -14,3 +14,9 @@ class SyncTests(unittest.TestCase):
     def test_empty_rejected(self):
         with self.assertRaises(ValueError):
             generate([], None)
+
+class CategoryTests(unittest.TestCase):
+    def test_categories(self):
+        from update_devices import category
+        for identifier, expected in [('iPhone19,4', 'iphone'), ('iPad19,1', 'ipad'), ('MacBookPro18,1', 'mac'), ('iMac21,1', 'mac'), ('Watch7,1', 'watch'), ('AudioAccessory6,1', 'homepod'), ('RealityDevice14,1', 'vision'), ('arm64', 'simulator'), ('Unknown1,1', 'other')]:
+            self.assertEqual(category(identifier), expected)

@@ -8,6 +8,19 @@ import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
 
+CATEGORIES = {
+    'iphone': ('iPhone',), 'ipad': ('iPad',), 'ipod': ('iPod',),
+    'mac': ('Mac', 'iMac', 'VirtualMac', 'ADP'),
+    'watch': ('Watch',), 'appletv': ('AppleTV',),
+    'homepod': ('AudioAccessory',), 'vision': ('RealityDevice',),
+    'ibridge': ('iBridge',),
+}
+
+def category(identifier):
+    if identifier in ('arm64', 'i386', 'x86_64'):
+        return 'simulator'
+    return next((name for name, prefixes in CATEGORIES.items() if identifier.startswith(prefixes)), 'other')
+
 def validate(rows):
     if not isinstance(rows, list) or not rows:
         raise ValueError('设备列表为空或格式错误')
@@ -44,16 +57,18 @@ def main():
     result = generate(json.loads(raw), previous)
     outputs = {args.output: result}
     # 分类依据硬件标识，不依赖可能重名或变化的设备名称。
-    for name, prefixes in {
-        'iphone': ('iPhone',),
-        'ipad': ('iPad',),
-        'ios': ('iPhone', 'iPad', 'iPod'),
-    }.items():
+    for name in [*CATEGORIES, 'simulator', 'other', 'ios']:
         path = args.output.parent / f'{name}.json'
-        rows = [row for row in result['devices'] if row['identifier'].startswith(prefixes)]
+        rows = [row for row in result['devices'] if (
+            category(row['identifier']) in ('iphone', 'ipad', 'ipod') if name == 'ios'
+            else category(row['identifier']) == name
+        )]
+        # 没有记录的类别不发布空配置，客户端拒绝空设备列表。
+        if not rows:
+            continue
         old = json.loads(path.read_text()) if path.exists() else None
         # 各分类独立递增；首次沿用全量版本，避免由全量地址切换时发生版本回退。
-        outputs[path] = generate(rows, old) if old else {'version': result['version'], 'devices': rows}
+        outputs[path] = {'version': old['version'] + (rows != old['devices']), 'devices': rows} if old else {'version': result['version'], 'devices': rows}
         validate(rows)
     # 全部校验后再落盘，避免校验失败时发布部分文件。
     encoded_outputs = {}
