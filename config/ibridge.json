@@ -1,5 +1,6 @@
 {
-  "version": 2,
+  "version": 3,
+  "buildTime": "2026-10-30T11:19:27+08:00",
   "devices": [
     {
       "name": "iBridge2,1",
