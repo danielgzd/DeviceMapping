@@ -1,4 +1,4 @@
-// Copyright © 2026 gdd. All rights reserved.
+// Copyright © 2026 gdd. Licensed under the MIT License.
 // 设备机型映射工具：整体复制 DeviceInfo 文件夹并将 JSON 加入 Copy Bundle Resources 即可接入。
 
 import Foundation

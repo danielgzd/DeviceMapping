@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright © 2026 gdd. All rights reserved.
+# Copyright © 2026 gdd. Licensed under the MIT License.
 """同步 IPSW.me。保留历史设备；数据变化才递增版本，失败不覆盖文件。"""
 import argparse
 import json

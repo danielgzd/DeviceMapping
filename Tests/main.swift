@@ -1,4 +1,4 @@
-// Copyright © 2026 gdd. All rights reserved.
+// Copyright © 2026 gdd. Licensed under the MIT License.
 // 设备机型映射工具：复制本文件及 Resources/device-mapping.json 即可接入。
 
 import Foundation

@@ -1,6 +1,8 @@
 # DeviceMapping
 
-Copyright © 2026 gdd. All rights reserved.
+Copyright © 2026 gdd.
+
+本项目代码采用 [MIT License](LICENSE)。设备数据来源于 IPSW.me 及说明中列出的公开资料；本项目许可证不替代第三方数据适用的条款。
 
 iOS 15+ 设备名称查询工具与自动更新配置。工具支持 iPhone、iPad 等 IPSW.me 收录设备；演示 App 最低 iOS 16。
 
