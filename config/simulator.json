@@ -1,6 +1,6 @@
 {
-  "version": 3,
-  "buildTime": "2026-10-30T11:19:27+08:00",
+  "version": 4,
+  "buildTime": "2026-11-01T15:41:05+08:00",
   "devices": [
     {
       "identifier": "arm64",
